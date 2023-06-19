@@ -1,0 +1,331 @@
+programa
+{
+	inclua biblioteca Util
+
+	inteiro chute,goleiromaquina,contadorgol,contadorerro //VARIÁVEL AO JOGADOR
+	inteiro defesa,jogadormaquina,contadordefesa,contadorgolmaquina //VARIÁVEL AO GOLEIRO
+
+	//FUNÇÃO ILUSTRATIVA, APENAS O BANNER
+	funcao banner()//, caracter gol_1)
+	{
+		escreva("===============\n")
+		escreva("JOGO DO PENÂLTI\n")                 // [BARRA DE ACERTOS:",gol_1,gol_2,gol_3,gol_4,gol_5,"]\n")
+		escreva("===============")
+	}
+	funcao regra(caracter opcao) //FUNÇÃO DE REGRAS
+	{
+		escreva("\nREGRAS DO JOGO:\n")
+		escreva("-1: DIGITE O NÚMERO REFERENTE ONDE DESEJA CHUTAR\n")
+		escreva("-2:PARA CADA ACERTO, O SÍMBOLO É:⊛\n")
+		escreva("-3:PARA CADA ERRO, O SÍMBOLO É:X\n")
+		escreva("Está pronto?, digite qualquer tecla para iniciar!\n")
+		leia(opcao)
+	}
+	funcao menu()//FUNÇÃO MENU
+	{
+		banner()
+		escreva("\nOPÇÕES\n")
+		escreva("[1]-INICIAR\n")
+		escreva("[2]-SAIR\n")
+	}
+	//FUNÇÃO QUE REPRESENTA O MOMENTO QUE O USUÁRIO É O JOGADOR
+	funcao jogador(caracter gol)
+	{
+		banner()
+		escreva("\nVOCÊ É O BATEDOR!!!\n")
+		escreva("\n+-----------------+")
+		escreva("\n|[1]           [2]|")
+		escreva("\n|       [5]       |")
+		escreva("\n|[3]           [4]|")
+		escreva("\n+-----------------+ DIGITE ABAIXO O NÚMERO REFERENTE AO CANTO QUE DESEJA CHUTAR:\n")
+		leia(chute)
+		goleiromaquina=Util.sorteia(1, 5)
+		limpa()
+			se(chute == goleiromaquina e chute == 1 ou chute ==goleiromaquina e chute == 2 ou chute==goleiromaquina e chute == 3 ou chute==goleiromaquina e chute == 4 ou chute ==5 e chute == goleiromaquina){
+				gol = 'X'
+					se (chute == 1)
+						goleiro1(gol)
+					se (chute == 2)
+						goleiro2(gol)
+					se (chute == 3)
+						goleiro3(gol)
+					se (chute == 4)
+						goleiro4(gol)
+					se (chute == 5)
+						goleiro5(gol)
+				escreva("\nQUE DEFESA!! O goleirão agarrou a bola, não deu pra você!\n")
+				Util.aguarde(1500)
+				limpa()
+			}
+			senao se(chute!=goleiromaquina e chute<=5 e chute>=1){
+				gol = '⊛'
+					se (chute == 1)
+						goleiro1(gol)
+					se (chute == 2)
+						goleiro2(gol)
+					se (chute == 3)
+						goleiro3(gol)
+					se (chute == 4)
+						goleiro4(gol)
+					se (chute == 5)
+						goleiro5(gol)
+				escreva("\nGOOOOOOOOOOOOOLLLLL!!! O goleiro não teve chance!\n")
+				Util.aguarde(1500)
+				limpa()
+			}
+			senao{
+				golisolado(gol)
+				escreva("\nPRA FORA!!! Você isolou a bola!!!")
+				Util.aguarde(1500)
+				limpa()
+			}
+	}
+	//FUNÇÃO QUE REPRESENTA O MOMENTO QUE O USUÁRIO É GOLEIRO
+	funcao goleiro(caracter gol)
+	{
+		banner()
+		escreva("\nVOCÊ É O GOLEIRO!!!\n")
+		escreva("\n+-----------------+")
+		escreva("\n|[1]           [2]|")
+		escreva("\n|       [5]       |")
+		escreva("\n|[3]           [4]|")
+		escreva("\n+-----------------+ DIGITE ABAIXO O NÚMERO REFERENTE AO CANTO QUE DESEJA DEFENDER:\n")
+		leia(defesa)
+		jogadormaquina=Util.sorteia(1, 5)
+		limpa()
+			se(defesa == jogadormaquina){//CASO ACERTE A DEFESA
+				gol = 'X'
+					se (defesa == 1)
+						goleiro1(gol)
+					se (defesa == 2)
+						goleiro2(gol)
+					se (defesa == 3)
+						goleiro3(gol)
+					se (defesa == 4)
+						goleiro4(gol)
+					se (defesa == 5)
+						goleiro5(gol)
+				escreva("\nDEFENDEEEEUUUUU!!! Você conseguiu pegar a bola!\n")
+				Util.aguarde(1500)
+				limpa()
+			}
+			senao{//CASO ERRE A DEFESA
+				gol = '⊛'
+					se (defesa == 1)
+						goleiro1(gol)
+					se (defesa == 2)
+						goleiro2(gol)
+					se (defesa == 3)
+						goleiro3(gol)
+					se (defesa == 4)
+						goleiro4(gol)
+					se (defesa == 5)
+						goleiro5(gol)
+				escreva("\nGOOOOOOOOOOOOOLLLLL!!! Você não teve chance!\n")
+				Util.aguarde(1500)
+				limpa()
+			}
+	}
+	//FUNÇAO PARA OS PENÂLTIS ALTERNADOS
+	funcao alternadas(caracter gol)
+	{
+		escreva("\n+========================+")
+		escreva("\n|PENÂLTIS ALTERNADOS!!!!!|")
+		escreva("\n+========================+")
+		Util.aguarde(3000)
+		limpa()
+		contadorgol = 0 contadorerro = 0
+		contadorgolmaquina = 0 contadordefesa = 0
+			faca{
+				jogador(gol)//PONTUAÇÕES PARA JOGADOR
+					se (chute!=goleiromaquina){
+						contadorgol++ //CASO ACERTE
+					}
+					se (chute==goleiromaquina ou chute>5){
+						contadorerro++ //CASO ERRE
+					}
+				goleiro(gol)//PONTUAÇÕES PARA GOLEIRO
+					se (defesa==jogadormaquina){	
+						contadordefesa++ //CASO DEFENDA
+					}
+					se (defesa!=jogadormaquina){
+						contadorgolmaquina++ //CASO NÃO DEFENDA
+					}				
+			}enquanto(contadorgol==contadorgolmaquina)
+			se(contadorgol>contadorgolmaquina){
+				escreva("\nParabéns!!! Você ganhou!!!")
+			}
+			senao se(contadorgol<contadorgolmaquina){
+				escreva("\nGame Over!!! Você perdeu!!!")
+			}
+	}
+	//FUNÇÃO NO QUAL SÃO APENAS OS ASPECTOS VISUAIS
+	funcao goleiro1 (caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|(",gol,")              |")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao goleiro2(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|              (",gol,")|")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao goleiro3(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n|(",gol,")              |")
+		escreva("\n+-----------------+")
+	}
+	funcao goleiro4(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n|              (",gol,")|")
+		escreva("\n+-----------------+")
+	}
+	funcao goleiro5(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|                 |")
+		escreva("\n|       (",gol,")       |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao golisolado (caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|      PRA        |")
+		escreva("\n|     FORA!!      |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao defesa1(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|(",gol,")              |")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao defesa2(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|              (",gol,")|")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao defesa3(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n|(",gol,")              |")
+		escreva("\n+-----------------+")
+	}
+	funcao defesa4(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|                 |")
+		escreva("\n|                 |")
+		escreva("\n|              (",gol,")|")
+		escreva("\n+-----------------+")
+	}
+	funcao defesa5(caracter gol)
+	{
+		banner()
+		escreva("\n+-----------------+")
+		escreva("\n|                 |")
+		escreva("\n|       (",gol,")       |")
+		escreva("\n|                 |")
+		escreva("\n+-----------------+")
+	}
+	funcao inicio()//FUNÇÃO INÍCIO
+	{
+		inteiro contador,menuescolha
+		//caracter gol_1,gol_2,gol_3,gol_4,gol_5
+		//gol_1 = 'O' gol_2 = 'O' gol_3 = 'O' gol_4 = 'O' gol_5='O'
+		caracter gol = 'O',opcao='s'
+		contadorgol = 0 contadorerro = 0
+		contador = 1
+		contadorgolmaquina = 0 contadordefesa = 0
+		chute = 0 goleiromaquina = 0
+		defesa = 0 jogadormaquina = 0
+
+		menu()
+		leia(menuescolha)
+		limpa()
+		faca{
+			escolha (menuescolha) // ESCOLHA DAS OPÇÕES
+				{
+					caso 1: // CASO DECIDA JOGAR
+						banner()
+						regra(opcao)
+						limpa()
+						faca{
+							escreva("\nACERTOS DO JOGADOR:",contadorgol,"/ERROS:",contadorerro)
+							escreva("\nACERTOS DA MÁQUINA:",contadorgolmaquina,"/ERROS:",contadordefesa,"\n")
+								se (contador%2 == 0){ //O MOMENTO QUE ALTERNA ENTRE BATEDOR E GOLEIRO
+									jogador(gol)
+										se (chute!=goleiromaquina e chute<=5)	//REFERENTE AOS VALORES PARA APRESENTAR NA TABELA DO USUÁRIO
+											contadorgol++
+										se (chute==goleiromaquina ou chute>5)
+											contadorerro++
+								}
+								senao{
+									goleiro(gol)
+										se (defesa==jogadormaquina)	//REFERENTE AOS VALORES PARA APRESENTAR NA TABELA DA MÁQUINA
+											contadordefesa++
+										se (defesa!=jogadormaquina)
+											contadorgolmaquina++
+								}
+							contador++
+						}enquanto(contador<=10) //RESULTADOS
+							escreva("FIM DE TENTATIVAS")
+							se(contadorgol>contadorgolmaquina){
+								escreva("\nParabéns!!! Você ganhou!!!")
+							}
+							senao se(contadorgol<contadorgolmaquina){
+								escreva("\nGame Over!!! Você perdeu!!!")
+							}
+							senao{//CASO DÊ EMPATE, VAI PARA BOLAS ALTERNADAS
+								alternadas(gol)
+						}
+						escreva("\nDeseja jogar novamente?\n")
+						escreva("[1]-SIM\n")
+						escreva("[2]-NÃO\n")
+						leia(menuescolha)
+						limpa()
+						/*RESETA PONTUAÇÕES PARA REINICIAR PARTIDA*/
+						contadorgol = 0 contadorerro = 0
+						contador = 1
+						contadorgolmaquina = 0 contadordefesa = 0
+						chute = 0 goleiromaquina = 0
+						defesa = 0 jogadormaquina = 0
+						pare
+						
+					caso 2: //CASO DESEJE SAIR
+						menuescolha = 2
+			}
+		}enquanto(menuescolha!=2)
+	}
+}
