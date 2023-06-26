@@ -263,15 +263,17 @@ programa
 	}
 	funcao inicio()//FUNÇÃO INÍCIO
 	{
-		inteiro contador,menuescolha
-		//caracter gol_1,gol_2,gol_3,gol_4,gol_5
-		//gol_1 = 'O' gol_2 = 'O' gol_3 = 'O' gol_4 = 'O' gol_5='O'
+		
+		inteiro contador,menuescolha, contadorjogador,contadormaquina
+		caracter tabelaJogador[5] = {'0','0','0','0','0'}, tabelaMaquina[5] = {'0','0','0','0','0'} //Tabelas de acertos e erros
 		caracter gol = 'O',opcao='s'
 		contadorgol = 0 contadorerro = 0
 		contador = 1
 		contadorgolmaquina = 0 contadordefesa = 0
 		chute = 0 goleiromaquina = 0
 		defesa = 0 jogadormaquina = 0
+		contadorjogador=0 contadormaquina=0 //Para organizar os arrays de pontuação
+		
 
 		menu()
 		leia(menuescolha)
@@ -284,21 +286,37 @@ programa
 						regra(opcao)
 						limpa()
 						faca{
+							escreva("\nTABELA DO JOGADOR:[",tabelaJogador[0],"|",tabelaJogador[1],"|",tabelaJogador[2],"|",tabelaJogador[3],"|",tabelaJogador[4],"]")
+							escreva("\nTABELA DA MÁQUINA:[",tabelaMaquina[0],"|",tabelaMaquina[1],"|",tabelaMaquina[2],"|",tabelaMaquina[3],"|",tabelaMaquina[4],"]")
 							escreva("\nACERTOS DO JOGADOR:",contadorgol,"/ERROS:",contadorerro)
 							escreva("\nACERTOS DA MÁQUINA:",contadorgolmaquina,"/ERROS:",contadordefesa,"\n")
 								se (contador%2 == 0){ //O MOMENTO QUE ALTERNA ENTRE BATEDOR E GOLEIRO
+									//Nesse momento, é jogador
 									jogador(gol)
-										se (chute!=goleiromaquina e chute<=5)	//REFERENTE AOS VALORES PARA APRESENTAR NA TABELA DO USUÁRIO
+										se (chute!=goleiromaquina e chute<=5){	//REFERENTE AOS VALORES PARA APRESENTAR NA TABELA DO USUÁRIO
+											//ACERTO
 											contadorgol++
-										se (chute==goleiromaquina ou chute>5)
+											tabelaJogador[0+contadorjogador]= '⊛' 
+										}se (chute==goleiromaquina ou chute>5){
+											//ERRO
 											contadorerro++
+											tabelaJogador[0+contadorjogador]= 'X'
+										}
+										contadorjogador++ //Para na próxima vez, ser o próximo array a ser preenchido
 								}
 								senao{
+									//Nesse momento, é goleiro
 									goleiro(gol)
-										se (defesa==jogadormaquina)	//REFERENTE AOS VALORES PARA APRESENTAR NA TABELA DA MÁQUINA
+										se (defesa==jogadormaquina){	//REFERENTE AOS VALORES PARA APRESENTAR NA TABELA DA MÁQUINA
+										//DEFESA
 											contadordefesa++
-										se (defesa!=jogadormaquina)
+											tabelaMaquina[0+contadormaquina]= 'X'
+										}se (defesa!=jogadormaquina){
+										//GOL DA MÁQUINA
 											contadorgolmaquina++
+											tabelaMaquina[0+contadormaquina]= '⊛'
+										}
+										contadormaquina++ //Para na próxima vez, ser o próximo array a ser preenchido
 								}
 							contador++
 						}enquanto(contador<=10) //RESULTADOS
@@ -323,6 +341,10 @@ programa
 						contadorgolmaquina = 0 contadordefesa = 0
 						chute = 0 goleiromaquina = 0
 						defesa = 0 jogadormaquina = 0
+            				contadorjogador = 0 contadormaquina = 0
+				          tabelaJogador[0] ='0' tabelaJogador[1] ='0' tabelaJogador[2] ='0'  tabelaJogador[3] ='0' tabelaJogador[4] ='0'  
+            				tabelaMaquina[0] = '0' tabelaMaquina[1] = '0' tabelaMaquina[2] = '0' tabelaMaquina[3] = '0' tabelaMaquina[4] = '0'
+  
 						pare
 						
 					caso 2: //CASO DESEJE SAIR
