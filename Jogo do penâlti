@@ -11,7 +11,7 @@ programa
 	funcao banner()//, caracter gol_1)
 	{
 		escreva("===============\n")
-		escreva("JOGO DO PENÂLTI\n")                 // [BARRA DE ACERTOS:",gol_1,gol_2,gol_3,gol_4,gol_5,"]\n")
+		escreva("JOGO DO PENÂLTI\n")
 		escreva("===============")
 	}
 	funcao regra(caracter opcao) //FUNÇÃO DE REGRAS
